@@ -1,1 +1,1 @@
-# Janel Template
+# Ininitalizing project
