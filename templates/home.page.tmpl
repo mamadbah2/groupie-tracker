@@ -1,0 +1,6 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <h1>Home Page</h1>
+    <p>Salut à tous ! Je suis le propriétaire {{index .StringData "owner"}} {{index .StringData "name"}}.<br>Cette page n'est un test</p>
+{{end}}
