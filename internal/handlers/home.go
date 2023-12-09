@@ -14,9 +14,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			errorResponse(w, http.StatusNotFound)
 			return
 		}
-		names := make(map[string]string)
-		names["owner"] = "Janel Affranchis"
-		names["name"] = "Proverbes MOKOMBA"
-		renderTemplates(w, "home", &models.TemplateData{StringData: names})
+
+		renderTemplates(w, "home", &models.TemplateData{AllArtist: getArtists()})
 	}
+}
+
+func Detail(w http.ResponseWriter, r *http.Request) {
+	
 }

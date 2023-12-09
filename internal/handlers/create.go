@@ -44,7 +44,7 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 		return cache, err
 	}
 
-	// Parcourir toutes les pages
+	// Parcourir toutes les pages du template
 	for _, page := range pages {
 		name := filepath.Base(page)
 		tmpl := template.Must(template.ParseFiles(page))
