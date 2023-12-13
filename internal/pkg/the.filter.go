@@ -2,22 +2,22 @@ package pkg
 
 import "bim/internal/models"
 
-func FilterByMember(number int) []models.Artists {
+func FilterByMember(listArtist[]models.Artists, number []int) []models.Artists {
 
 	return []models.Artists{}
 }
 
-func FilterByDateCreation(date int) []models.Artists {
+func FilterByDateCreation(listArtist[]models.Artists, dateDebut, dateFin int) []models.Artists {
 
 	return []models.Artists{}
 }
 
-func FilterByFirstAlbum(albumName string) []models.Artists {
+func FilterByFirstAlbum(listArtist[]models.Artists, albumName string) []models.Artists {
 
 	return []models.Artists{}
 }
 
-func FilterByLocation(locate string) []models.Artists {
+func FilterByLocation(listArtist[]models.Artists, locate string) []models.Artists {
 
 	return []models.Artists{}
 }

@@ -2,9 +2,9 @@ package models
 
 type TemplateData struct {
 	AllArtist []Artists
-	Relation Relation
-	AppInfos   App
-	Error      ErrorData
+	Relation  Relation
+	AppInfos  App
+	Error     ErrorData
 }
 
 type App struct {

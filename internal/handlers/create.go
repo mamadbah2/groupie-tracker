@@ -9,7 +9,7 @@ import (
 	"text/template"
 )
 
-const appName = "Janel Template"
+const appName = "Groupie-Tracker"
 
 // Configuraton globale
 var appConfig *config.Config
@@ -36,7 +36,7 @@ func renderTemplates(w http.ResponseWriter, tmplName string, td *models.Template
 }
 
 // Création des caches
-func CreateTemplateCache() (map[string]*template.Template, error) {
+func  CreateTemplateCache() (map[string]*template.Template, error) {
 	cache := map[string]*template.Template{}
 	pages, err := filepath.Glob("./templates/*.page.tmpl")
 
