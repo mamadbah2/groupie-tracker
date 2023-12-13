@@ -1,6 +1,44 @@
 {{template "base" .}}
 
 {{define "content"}}
-    <h1>Home Page</h1>
-    <p>Salut à tous ! Je suis le propriétaire {{index .StringData "owner"}} {{index .StringData "name"}}.<br>Cette page n'est un test</p>
+
+<div class="searchBar">
+    <form action="search" method="post">
+        <h4>Search Bar</h4>
+        <input type="text" list="element" name="research" placeholder="Search your artist">
+        <input type="submit" value="Research">
+        <datalist id="element">
+            {{ range .AllArtist }}
+            <option value="{{ .Name }}"> {{ .Name }} - artist/band </option>
+            <option value="{{ .FirstAlbum }}"> {{ .FirstAlbum }} - firstAlbum </option>
+            <option value="{{ .CreationDate }}"> {{ .CreationDate}} - creationDate </option>
+            {{ range .Members }}
+            <option value="{{ . }}"> {{ . }} - member </option>
+            {{ end }}
+            {{ end }}
+            {{ range .AllRelation.Index }}
+                {{ range $key, $value := .DatesLocations }}
+                <div>
+                    <option value="{{$key}}"> {{$key}} - location</option>
+                </div>
+                {{end}}
+            {{end}}
+        </datalist>
+    </form>
+</div>
+
+<div class="container">
+    {{ range .AllArtist }}
+    <a href="detail?Id={{ .Id }}">
+        <div class="box">
+            <div class="image">
+                <img src="{{ .Image }}" alt="#">
+            </div>
+            <h3>
+                {{ .Name }}
+            </h3>
+        </div>
+    </a>
+    {{ end }}
+</div>
 {{end}}

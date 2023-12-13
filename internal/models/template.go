@@ -1,10 +1,12 @@
 package models
 
 type TemplateData struct {
-	AllArtist []Artists
-	Relation  Relation
-	AppInfos  App
-	Error     ErrorData
+	AllArtist   []Artists
+	Artist      Artists
+	AllRelation Relation
+	Relation    interface{}
+	AppInfos    App
+	Error       ErrorData
 }
 
 type App struct {

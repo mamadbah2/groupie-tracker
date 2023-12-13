@@ -1,0 +1,43 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<main>
+    <div class="nameImg">
+        <div class="profil">
+            <img src="{{ .Artist.Image }}" alt="Image de profil">
+        </div>
+        <h1> <span>{{ .Artist.Name }}</span> </h1>
+    </div>
+    <div class="members">
+        <h2><span>Members</span></h2>
+        <ul>
+            {{ range .Artist.Members }}
+            <li> {{ . }} </li>
+            {{ end }}
+        </ul>
+    </div>
+    <div class="infos">
+        <h2><span>Infos</span></h2>
+        <div>
+            <span><strong>CreationDate : </strong> {{ .Artist.CreationDate }} </span><br>
+            <span><strong>FirstAlbum : </strong> {{ .Artist.FirstAlbum }} </span>
+        </div>
+    </div>
+    <div class="dateLocaton">
+        <h2><span>Relation</span></h2>
+        {{ range $key, $value := .Relation.DatesLocations }}
+        <div>
+            <strong> {{$key}} :</strong>
+            <ul>
+                {{ range $value}}
+                <li> {{.}} </li>
+                {{end}}
+
+            </ul>
+        </div>
+        {{end}}
+    </div>
+</main>
+
+{{end}}
