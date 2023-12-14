@@ -16,9 +16,13 @@ func doublon(table []int, data int) bool {
 
 func unionTable(table1, table2 []int) []int {
 	var table []int
-	table1 = append(table1, table2...)
 	for _, t := range table1 {
-		if doublon(table, t) {
+		if !doublon(table, t) {
+			table = append(table, t)
+		}
+	}
+	for _, t := range table2 {
+		if !doublon(table, t) {
 			table = append(table, t)
 		}
 	}
@@ -33,7 +37,7 @@ func matchIdAndArtist(tableId []int, allArtist []models.Artists) []models.Artist
 	return artistFinded
 }
 
-func ResearchInArtist(data string, tableArtists []models.Artists) []int {
+func researchInArtist(data string, tableArtists []models.Artists) []int {
 	var tabId []int
 	for _, artist := range tableArtists {
 		if artist.Name == data || artist.FirstAlbum == data {
@@ -55,7 +59,7 @@ func ResearchInArtist(data string, tableArtists []models.Artists) []int {
 	return tabId
 }
 
-func ResearchInRelation(data string, tableRelations models.Relation) []int {
+func researchInRelation(data string, tableRelations models.Relation) []int {
 	var tabId []int
 	for _, relation := range tableRelations.Index {
 		if _, location := relation.DatesLocations[data]; location {
@@ -63,4 +67,8 @@ func ResearchInRelation(data string, tableRelations models.Relation) []int {
 		}
 	}
 	return tabId
+}
+
+func FindedArtist(data string, allArtist []models.Artists, allRelation models.Relation) []models.Artists {
+	return matchIdAndArtist(unionTable(researchInArtist(data, allArtist), researchInRelation(data, allRelation)), allArtist)
 }

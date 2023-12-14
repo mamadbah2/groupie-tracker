@@ -30,6 +30,7 @@ func Run(tab []string) {
 		// Passages du gestionnaires des templates
 		router.HandleFunc("/", handlers.Home)
 		router.HandleFunc("/detail", handlers.Detail)
+		router.HandleFunc("/search", handlers.Search)
 
 		// Lancement du serveur d'application
 		fmt.Println("Server started on port http://0.0.0.0" + appConfig.Port)
