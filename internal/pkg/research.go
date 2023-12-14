@@ -14,6 +14,7 @@ func doublon(table []int, data int) bool {
 	return false
 }
 
+// Prend 2 tableaux et unie les tableaux tout en eliminant les doublons
 func unionTable(table1, table2 []int) []int {
 	var table []int
 	for _, t := range table1 {
@@ -29,14 +30,10 @@ func unionTable(table1, table2 []int) []int {
 	return table
 }
 
-func matchIdAndArtist(tableId []int, allArtist []models.Artists) []models.Artists {
-	var artistFinded []models.Artists
-	for _, id := range tableId {
-		artistFinded = append(artistFinded, allArtist[id-1])
-	}
-	return artistFinded
-}
 
+// Cette fonction prend la donnee qu'on veut rechercher et tout les artists 
+// Apres avoir rechercher ça... Il retourne tous les Id qui correspondent a la
+// recherche
 func researchInArtist(data string, tableArtists []models.Artists) []int {
 	var tabId []int
 	for _, artist := range tableArtists {
@@ -59,6 +56,9 @@ func researchInArtist(data string, tableArtists []models.Artists) []int {
 	return tabId
 }
 
+// Cette fonction prend la donnee qu'on veut rechercher et toutes les relations 
+// Apres avoir rechercher ça... Il retourne tous les Id qui correspondent a la
+// recherche
 func researchInRelation(data string, tableRelations models.Relation) []int {
 	var tabId []int
 	for _, relation := range tableRelations.Index {
@@ -68,6 +68,18 @@ func researchInRelation(data string, tableRelations models.Relation) []int {
 	}
 	return tabId
 }
+
+// Cette fonction fait correspondre les id du tableau d'id avec l'artist correspondant
+// et retourne les artists trouvés
+
+func matchIdAndArtist(tableId []int, allArtist []models.Artists) []models.Artists {
+	var artistFinded []models.Artists
+	for _, id := range tableId {
+		artistFinded = append(artistFinded, allArtist[id-1])
+	}
+	return artistFinded
+}
+
 
 func FindedArtist(data string, allArtist []models.Artists, allRelation models.Relation) []models.Artists {
 	return matchIdAndArtist(unionTable(researchInArtist(data, allArtist), researchInRelation(data, allRelation)), allArtist)

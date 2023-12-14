@@ -49,5 +49,5 @@ func getRelation(id int) interface{} {
 }
 
 func getCordonnate(latitude *float64, longitude *float64) {
-
+	
 }
