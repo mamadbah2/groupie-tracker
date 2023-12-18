@@ -2,6 +2,10 @@
 
 {{ define "content" }}
 
+{{ if eq .AllArtist nil }}
+    <h1>No value input</h1>
+    <a href="/"> << Go back </a>
+{{end}}
 <div class="container">
     {{ range .AllArtist }}
     <a href="detail?Id={{ .Id }}">

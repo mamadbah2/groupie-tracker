@@ -5,6 +5,8 @@ type TemplateData struct {
 	Artist      Artists
 	AllRelation Relation
 	Relation    interface{}
+	FilterLocations []string
+	Coordinate AllGeoCoordinate
 	AppInfos    App
 	Error       ErrorData
 }

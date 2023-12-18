@@ -1,4 +1,19 @@
+*  {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 h1 {
     font-size: 60px !important;
     color: #87ceeb;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.container a {
+    display: block;
+    margin: 10px;
 }

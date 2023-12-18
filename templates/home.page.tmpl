@@ -27,6 +27,82 @@
     </form>
 </div>
 
+<form method="post" enctype="application/x-www-form-urlencoded">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+        <div style="display: block">
+            <label>Member</label>
+            <div style="display: flex">
+                <label for="check1" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                    1<input type="checkbox" id="check1" name="members1" value="1">
+                </label>
+                <label for="check2" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                    2<input type="checkbox" id="check2" name="members2" value="2">
+                </label>
+                <label for="check3" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                    3<input type="checkbox" id="check3" name="members3" value="3">
+                </label>
+                <label for="check4" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                    4<input type="checkbox" id="check4" name="members4" value="4">
+                </label>
+                <label for="check5" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                    5<input type="checkbox" id="check5" name="members5" value="5">
+                </label>
+                <label for="check6" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                    6<input type="checkbox" id="check6" name="members6" value="6">
+                </label>
+                <label for="check7" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                    7<input type="checkbox" id="check7" name="members7" value="7">
+                </label>
+                <label for="check8" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                    8<input type="checkbox" id="check8" name="members8" value="8">
+                </label>
+            </div>
+        </div>
+        <div style="display: block">
+            <label>Creation Date</label>
+            <div style="display: flex">
+                <div style="display: block">
+                    <input type="number" value="1958" min="1958" id="yearStart" name="yearStart" step="1" max="2015">
+                    <label for="yearStart">From</label>
+                </div>
+                <div style="display: block">
+                    <input type="number" value="2015" min="1958" id="yearEnd" name="yearEnd" step="1" max="2015">
+                    <label for="yearEnd">To</label>
+                </div>
+            </div>
+        </div>
+        <div style="display: block">
+            <label>First Album</label>
+            <div style="display: flex">
+                <div style="display: block">
+                    <input type="date" id="faStart" name="faStart" min="1963-07-30" max="2018-11-15" value="1963-07-30">
+                    <label for="faStart">From</label>
+                </div>
+                <div style="display: block">
+                    <input type="date" id="faEnd" name="faEnd" min="1963-07-30" max="2018-11-16" value="2018-11-16">
+                    <label for="faEnd">To</label>
+                </div>
+            </div>
+        </div>
+        <div style="display: block">
+            <label for="location">Location</label>
+            <select name="location" id="location">
+                <option value="none" selected>--- Select Location ---</option>
+                {{range .FilterLocations}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+            </select>
+        </div>
+        <div style="display: block">
+            <label>Buttons</label>
+            <div style="display: flex;">
+                <button type="submit">Filter</button>
+                <a style="background-color: #0c151c; padding: 6px; border-radius: 7px; display: flex; align-items: center;" href="/">All</a>
+            </div>
+        </div>
+    </div>
+</form>
+
 <div class="container">
     {{ range .AllArtist }}
     <a href="detail?Id={{ .Id }}">
