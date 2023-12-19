@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 )
+
 const KEYMAP = "LxqL2Zy8AMyJhz1aVcLPd43rMTiaLydz"
 const apiURL = "https://groupietrackers.herokuapp.com/api/"
 
@@ -41,6 +42,7 @@ func getRelations() models.Relation {
 	if err != nil {
 		return models.Relation{}
 	}
+
 	return relations
 }
 
@@ -49,7 +51,7 @@ func getRelation(id int) interface{} {
 }
 
 func getCordonnate(place string, latitude *float64, longitude *float64) error {
-	respMap, err := http.Get("https://www.mapquestapi.com/geocoding/v1/address?key="+ KEYMAP +"&location="+place)
+	respMap, err := http.Get("https://www.mapquestapi.com/geocoding/v1/address?key=" + KEYMAP + "&location=" + place)
 	var locate models.APIResponse
 	err = json.NewDecoder(respMap.Body).Decode(&locate)
 	*latitude = locate.Results[0].Locations[0].LatLng.Lat

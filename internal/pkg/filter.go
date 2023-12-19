@@ -89,14 +89,14 @@ func artistBelongsToMember(artist models.Artists, tab []int) bool {
 	if len(tab) == 0 {
 		return true
 	}
-	/*for _, v := range tab {
+	for _, v := range tab {
 		if len(artist.Members) == v {
 			return true
 		}
-	}*/
+	}
 	// A revoir
-	return len(artist.Members) >= tab[0] && len(artist.Members) <= tab[len(tab)-1]
-	// return false
+	// return len(artist.Members) >= tab[0] && len(artist.Members) <= tab[len(tab)-1]
+	return false
 }
 
 // artistBelongsToLocation checks if the artist's location matches the specified query

@@ -20,7 +20,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		all1 := getArtists()
 		all2 := getRelations()
 		fString := pkg.GetUniqueLocation(all2)
-		renderTemplates(w, "home", &models.TemplateData{AppInfos: models.App{AppName: appName, PageTitle: "List of Artists", PageName: "Home"}, AllArtist: all1, FilterLocations: fString})
+		renderTemplates(w, "home", &models.TemplateData{AppInfos: models.App{AppName: appName, PageTitle: "List of Artists", PageName: "Home"}, AllArtist: all1, FilterLocations: fString, AllRelation: getRelations()})
 
 	case http.MethodPost:
 		var Arts []models.Artists
@@ -45,7 +45,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		Arts = pkg.FilterArtists(all1, all2, faStart, faEnd, yearStart, yearEnd, members, location)
-
+		fmt.Println(getRelations())
 		renderTemplates(w, "home", &models.TemplateData{AllArtist: Arts, AllRelation: getRelations(), FilterLocations: fString})
 	}
 }
@@ -69,7 +69,6 @@ func Detail(w http.ResponseWriter, r *http.Request) {
 			coordinate.Lat = append(coordinate.Lat, x)
 			coordinate.Lng = append(coordinate.Lng, y)
 		}
-		fmt.Println(coordinate)
 		renderTemplates(w, "detail", &models.TemplateData{Artist: getArtist(id), Relation: getRelation(id), Coordinate: coordinate})
 	}
 }
