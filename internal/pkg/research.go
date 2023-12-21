@@ -3,6 +3,7 @@ package pkg
 import (
 	"bim/internal/models"
 	"strconv"
+	"strings"
 )
 
 func doublon(table []int, data int) bool {
@@ -30,14 +31,13 @@ func unionTable(table1, table2 []int) []int {
 	return table
 }
 
-
-// Cette fonction prend la donnee qu'on veut rechercher et tout les artists 
+// Cette fonction prend la donnee qu'on veut rechercher et tout les artists
 // Apres avoir rechercher ça... Il retourne tous les Id qui correspondent a la
 // recherche
 func researchInArtist(data string, tableArtists []models.Artists) []int {
 	var tabId []int
 	for _, artist := range tableArtists {
-		if artist.Name == data || artist.FirstAlbum == data {
+		if strings.ToLower(artist.Name) == data || strings.ToLower(artist.FirstAlbum) == data {
 			tabId = append(tabId, artist.Id)
 		}
 		annee, err := strconv.ParseInt(data, 10, 64)
@@ -47,7 +47,7 @@ func researchInArtist(data string, tableArtists []models.Artists) []int {
 			}
 		}
 		for _, member := range artist.Members {
-			if member == data {
+			if strings.ToLower(member) == data {
 				tabId = append(tabId, artist.Id)
 
 			}
@@ -56,14 +56,48 @@ func researchInArtist(data string, tableArtists []models.Artists) []int {
 	return tabId
 }
 
-// Cette fonction prend la donnee qu'on veut rechercher et toutes les relations 
+func researchInArtistGlob(data string, tableArtists []models.Artists) []int {
+	var tabId []int
+	for _, artist := range tableArtists {
+		if strings.Contains(strings.ToLower(artist.Name), data) || strings.Contains(artist.FirstAlbum, data) {
+			tabId = append(tabId, artist.Id)
+		}
+		if strings.Contains(strconv.Itoa(artist.CreationDate), data) {
+			tabId = append(tabId, artist.Id)
+		}
+
+		for _, member := range artist.Members {
+			if strings.Contains(strings.ToLower(member), data) {
+				tabId = append(tabId, artist.Id)
+
+			}
+		}
+	}
+	return tabId
+}
+
+// Cette fonction prend la donnee qu'on veut rechercher et toutes les relations
 // Apres avoir rechercher ça... Il retourne tous les Id qui correspondent a la
 // recherche
 func researchInRelation(data string, tableRelations models.Relation) []int {
 	var tabId []int
 	for _, relation := range tableRelations.Index {
-		if _, location := relation.DatesLocations[data]; location {
-			tabId = append(tabId, relation.Id)
+		for key := range relation.DatesLocations {
+			if strings.ToLower(key) == data {
+				tabId = append(tabId, relation.Id)
+			}
+		}
+	}
+	return tabId
+}
+
+func researchInRelationGlob(data string, tableRelations models.Relation) []int {
+	var tabId []int
+	for _, relation := range tableRelations.Index {
+		for key := range relation.DatesLocations {
+			if strings.Contains(strings.ToLower(key), data) {
+				tabId = append(tabId, relation.Id)
+			}
 		}
 	}
 	return tabId
@@ -80,7 +114,10 @@ func matchIdAndArtist(tableId []int, allArtist []models.Artists) []models.Artist
 	return artistFinded
 }
 
-
 func FindedArtist(data string, allArtist []models.Artists, allRelation models.Relation) []models.Artists {
 	return matchIdAndArtist(unionTable(researchInArtist(data, allArtist), researchInRelation(data, allRelation)), allArtist)
+}
+
+func FindedArtistGlob(data string, allArtist []models.Artists, allRelation models.Relation) []models.Artists {
+	return matchIdAndArtist(unionTable(researchInArtistGlob(data, allArtist), researchInRelationGlob(data, allRelation)), allArtist)
 }
