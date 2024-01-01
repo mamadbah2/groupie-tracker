@@ -36,18 +36,16 @@ func getArtist(id int) models.Artists {
 	return getArtists()[id-1]
 }
 
-func getRelations() models.Relation {
+func getRelations() (models.Relation, error) {
 	var relations models.Relation
 	err := get(apiURL+"relation", &relations)
-	if err != nil {
-		return models.Relation{}
-	}
 
-	return relations
+	return relations, err
 }
 
 func getRelation(id int) interface{} {
-	return getRelations().Index[id-1]
+	getIt, _ := getRelations()
+	return getIt.Index[id-1]
 }
 
 func getCordonnate(place string, latitude *float64, longitude *float64) error {

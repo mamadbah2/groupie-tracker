@@ -3,7 +3,6 @@ package handlers
 import (
 	"bim/internal/models"
 	"bim/internal/pkg"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -18,15 +17,29 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		all1 := getArtists()
-		all2 := getRelations()
+		if all1 == nil {
+			errorResponse(w, http.StatusInternalServerError)
+			return
+		}
+		all2, err := getRelations()
+		if err != nil {
+			errorResponse(w, http.StatusInternalServerError)
+			return
+		}
 		fString := pkg.GetUniqueLocation(all2)
-		renderTemplates(w, "home", &models.TemplateData{AppInfos: models.App{AppName: appName, PageTitle: "List of Artists", PageName: "Home"}, AllArtist: all1, FilterLocations: fString, AllRelation: getRelations()})
+		renderTemplates(w, "home", &models.TemplateData{AppInfos: models.App{AppName: appName, PageTitle: "List of Artists", PageName: "Home"}, AllArtist: all1, FilterLocations: fString, AllRelation: all2})
 
 	case http.MethodPost:
 		var Arts []models.Artists
 		var nums []string
 		all1 := getArtists()
-		all2 := getRelations()
+		if all1 == nil {
+			errorResponse(w, http.StatusInternalServerError)
+		}
+		all2, err := getRelations()
+		if err != nil {
+			errorResponse(w, http.StatusInternalServerError)
+		}
 		yearStart := pkg.Atoi(r.FormValue("yearStart"))
 		yearEnd := pkg.Atoi(r.FormValue("yearEnd"))
 		faStart, err4 := time.Parse("02-01-2006", pkg.BestFormat(r.FormValue("faStart")))
@@ -45,8 +58,13 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		Arts = pkg.FilterArtists(all1, all2, faStart, faEnd, yearStart, yearEnd, members, location)
-		fmt.Println(getRelations())
-		renderTemplates(w, "home", &models.TemplateData{AllArtist: Arts, AllRelation: getRelations(), FilterLocations: fString})
+		// fmt.Println(getRelations())
+		getIt, err := getRelations()
+		if err != nil {
+			errorResponse(w, http.StatusInternalServerError)
+			return
+		}
+		renderTemplates(w, "home", &models.TemplateData{AllArtist: Arts, AllRelation: getIt, FilterLocations: fString})
 	}
 }
 
@@ -63,7 +81,12 @@ func Detail(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		var coordinate models.AllGeoCoordinate
-		for place := range getRelations().Index[id-1].DatesLocations {
+		getIt, err := getRelations()
+		if err != nil {
+			errorResponse(w, http.StatusInternalServerError)
+			return
+		}
+		for place := range getIt.Index[id-1].DatesLocations {
 			var x, y float64
 			err = getCordonnate(place, &x, &y)
 			coordinate.Lat = append(coordinate.Lat, x)
